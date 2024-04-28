@@ -42,7 +42,7 @@ export const RedirectionPage: React.FC = () => {
 
                 let apiRequest: ApiRequest = api.fetchToken;
                 let response = await fetchRequest(
-                    apiRequest.url(issuerId) + `?code=${code}&clientId=${clientId}&codeVerifier=${codeVerifier}`,
+                    apiRequest.url(issuerId),
                     apiRequest.methodType,
                     apiRequest.headers(),
                     requestBody
@@ -50,14 +50,11 @@ export const RedirectionPage: React.FC = () => {
 
                 apiRequest = api.downloadVc;
                 response = await fetchRequest(
-                    apiRequest.url(issuerId, certificateId) + `?token=${response?.access_token}`,
+                    apiRequest.url(issuerId, certificateId),
                     apiRequest.methodType,
                     apiRequest.headers(response?.access_token)
                 );
                 await downloadCredentialPDF(response, certificateId);
-                if (state === RequestStatus.DONE) {
-                    await downloadCredentialPDF(response, certificateId);
-                }
                 if (urlState != null) {
                     removeActiveSession(urlState);
                 }
