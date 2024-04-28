@@ -22,6 +22,11 @@ export const useFetch = () => {
                 body: body,
             });
 
+            if (uri.indexOf("download") !== -1) {
+                setState(RequestStatus.DONE);
+                return responseJson
+            }
+
             if (response.ok) {
                 responseJson = await response.json();
                 setState(RequestStatus.DONE);

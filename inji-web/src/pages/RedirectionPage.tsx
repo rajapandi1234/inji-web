@@ -66,6 +66,15 @@ export const RedirectionPage: React.FC = () => {
 
     }, [])
 
+    if (state === RequestStatus.LOADING) {
+        return <div data-testid="Redirection-Page-Container">
+            <NavBar title={activeSessionInfo?.issuerId} search={false}/>
+            <DownloadResult title={t("loading.generic.title")}
+                            subTitle={t("loading.generic.subTitle")}
+                            success={false}/>
+        </div>
+    }
+
     if (!session) {
         return <div data-testid="Redirection-Page-Container">
             <NavBar title={activeSessionInfo?.issuerId} search={false}/>

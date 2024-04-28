@@ -34,7 +34,7 @@ export const getFileName = (contentDispositionHeader: any) => {
 
 export const downloadCredentialPDF = async (response: any, certificateId: string) => {
 
-    const blob: Blob = new Blob([response.data], {type: 'application/pdf'});
+    const blob: Blob = new Blob([response], {type: 'application/pdf'});
 
     let fileName = `${certificateId}.pdf`;
     // Create a temporary URL for the Blob
