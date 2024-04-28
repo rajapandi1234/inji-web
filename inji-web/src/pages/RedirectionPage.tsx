@@ -54,7 +54,9 @@ export const RedirectionPage: React.FC = () => {
                     apiRequest.methodType,
                     apiRequest.headers(response?.access_token)
                 );
-                await downloadCredentialPDF(response, certificateId);
+                if (state !== RequestStatus.ERROR) {
+                    await downloadCredentialPDF(response, certificateId);
+                }
                 if (urlState != null) {
                     removeActiveSession(urlState);
                 }
@@ -66,20 +68,20 @@ export const RedirectionPage: React.FC = () => {
 
     }, [])
 
-    if (state === RequestStatus.LOADING) {
-        return <div data-testid="Redirection-Page-Container">
-            <NavBar title={activeSessionInfo?.issuerId} search={false}/>
-            <DownloadResult title={t("loading.generic.title")}
-                            subTitle={t("loading.generic.subTitle")}
-                            success={false}/>
-        </div>
-    }
-
     if (!session) {
         return <div data-testid="Redirection-Page-Container">
             <NavBar title={activeSessionInfo?.issuerId} search={false}/>
             <DownloadResult title={t("error.invalidSession.title")}
                             subTitle={t("error.invalidSession.subTitle")}
+                            success={false}/>
+        </div>
+    }
+
+    if (state === RequestStatus.LOADING) {
+        return <div data-testid="Redirection-Page-Container">
+            <NavBar title={activeSessionInfo?.issuerId} search={false}/>
+            <DownloadResult title={t("loading.title")}
+                            subTitle={t("loading.subTitle")}
                             success={false}/>
         </div>
     }

@@ -24,7 +24,7 @@ export const useFetch = () => {
 
             if (uri.indexOf("download") !== -1) {
                 setState(RequestStatus.DONE);
-                return responseJson
+                return await response.blob();
             }
 
             if (response.ok) {
