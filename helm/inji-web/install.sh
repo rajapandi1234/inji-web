@@ -7,7 +7,7 @@ if [ $# -ge 1 ] ; then
 fi
 
 NS=injiweb
-CHART_VERSION=0.0.1-develop
+CHART_VERSION=0.9.0
 
 DEFAULT_MOSIP_INJIWEB_HOST=$( kubectl get cm global -n config-server -o jsonpath={.data.mosip-injiweb-host} )
 # Check if MOSIP_INJIWEB_HOST is present under configmap/global of configserver
@@ -34,9 +34,9 @@ echo "MOSIP_INJIWEB_HOST is not present in configmap/global of configserver"
     kubectl patch configmap global -n config-server --type merge -p "{\"data\": {\"mosip-injiweb-host\": \"$MOSIP_INJIWEBB_HOST\"}}"
     kubectl patch configmap global -n default --type merge -p "{\"data\": {\"mosip-injiweb-host\": \"$MOSIP_INJIWEBB_HOST\"}}"
     # Add the host
-    kubectl set env deployment/config-server SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_ESIGNET_INJIWEB_HOST=$MOSIP_INJIWEB_HOST -n config-server
+    kubectl set env deployment/inji-config-server SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_ESIGNET_INJIWEB_HOST=$MOSIP_INJIWEB_HOST -n config-server
     # Restart the configserver deployment
-    kubectl -n config-server get deploy -o name | xargs -n1 -t kubectl -n config-server rollout status 
+    kubectl -n config-server get deploy -o name | xargs -n1 -t kubectl -n config-server rollout status
 
 sleep 400s
 
