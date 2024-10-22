@@ -50,7 +50,7 @@ jobs:
 
   call-trivy-scan:
     uses: mosip/kattu/.github/workflows/trivy.yml@develop
+    needs: build-dockers-inji-web
     with:
             service_name: 'inji-web'
-            service_location: 'inji-web'
             version: 'latest'
